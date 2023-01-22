@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="voteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cities">
+    <Key>
+      <PropertyRef Name="City_id" />
+    </Key>
+    <Property Name="City_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Customers1">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="50" />
+    <Property Name="Age" Type="int" />
+    <Property Name="City" Type="int" />
+    <Property Name="Phone" Type="int" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Photo" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK_Customers1_Cities">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+    <End Role="Customers1" Type="Self.Customers1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="City_id" />
+      </Principal>
+      <Dependent Role="Customers1">
+        <PropertyRef Name="City" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="voteModelStoreContainer">
+    <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customers1" EntityType="Self.Customers1" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Customers1_Cities" Association="Self.FK_Customers1_Cities">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Customers1" EntitySet="Customers1" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
